@@ -56,13 +56,14 @@ public class AllUsersActivity extends Activity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info=
+                (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.context_delete:
-                Log.d("MyLog", "item for delete is : " + currentItem);
-                View view = listView.getChildAt((int) currentItem).findViewById(R.id.get_id);
-                String id = ((TextView) view).getText().toString();
+                long id = info.id;
                 db.delete(DBConstans.TABLE_NAME, DBConstans.COLUMN_ID + "=" + id, null);
                 Log.d("MyLog", "id to delete is " + id);
+                cursor.requery();
                 simpleCursorAdapter.notifyDataSetChanged();
                 break;
             case R.id.context_edit:
