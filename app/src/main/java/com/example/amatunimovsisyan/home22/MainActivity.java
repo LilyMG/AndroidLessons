@@ -26,7 +26,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private DBHelper dbHelper;
     private SQLiteDatabase db;
     private Cursor cursor;
-    private ArrayAdapter<String> spinnerAdapter;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {

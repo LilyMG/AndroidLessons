@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class AllUsersActivity extends Activity {
@@ -25,7 +26,7 @@ public class AllUsersActivity extends Activity {
     private SimpleCursorAdapter simpleCursorAdapter;
     private String[] columns = {DBConstans.COLUMN_USERNAME, DBConstans.COLUMN_PASSWORD, DBConstans.COLUMN_ID};
     private int[] ids = {R.id.user_login, R.id.user_password, R.id.get_id};
-
+    private ContentValues cv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class AllUsersActivity extends Activity {
         simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_users_list_item, cursor, columns, ids, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         listView.setAdapter(simpleCursorAdapter);
         registerForContextMenu(listView);
+        cv = new ContentValues();
     }
 
 
@@ -48,8 +50,8 @@ public class AllUsersActivity extends Activity {
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info=
-                (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
+        AdapterView.AdapterContextMenuInfo info =
+                (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         long id = info.id;
         switch (item.getItemId()) {
             case R.id.context_delete:
@@ -59,7 +61,12 @@ public class AllUsersActivity extends Activity {
                 simpleCursorAdapter.notifyDataSetChanged();
                 break;
             case R.id.context_edit:
-                simpleCursorAdapter.getItem((int) id);
+                cv.clear();
+                cv.put(DBConstans.COLUMN_USERNAME, "login");
+                cv.put(DBConstans.COLUMN_PASSWORD, "password");
+                db.update(DBConstans.TABLE_NAME, cv, DBConstans.COLUMN_ID + "=" + id, null);
+                cursor.requery();
+                simpleCursorAdapter.notifyDataSetChanged();
                 break;
         }
         return true;
