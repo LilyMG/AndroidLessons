@@ -25,7 +25,6 @@ public class AllUsersActivity extends Activity {
     private SimpleCursorAdapter simpleCursorAdapter;
     private String[] columns = {DBConstans.COLUMN_USERNAME, DBConstans.COLUMN_PASSWORD, DBConstans.COLUMN_ID};
     private int[] ids = {R.id.user_login, R.id.user_password, R.id.get_id};
-    private long currentItem;
 
 
     @Override
@@ -36,21 +35,14 @@ public class AllUsersActivity extends Activity {
         db = dbHelper.getWritableDatabase();
         cursor = db.query(DBConstans.TABLE_NAME, null, null, null, null, null, null);
         listView = (ListView) findViewById(R.id.listview);
-        simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_users_list_item, cursor, columns, ids);
+        simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.all_users_list_item, cursor, columns, ids, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
         listView.setAdapter(simpleCursorAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                currentItem = id-1;
-            }
-        });
         registerForContextMenu(listView);
     }
 
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        // super.onCreateContextMenu(menu, v, menuInfo);.
         getMenuInflater().inflate(R.menu.menu_all_users, menu);
     }
 
@@ -68,32 +60,22 @@ public class AllUsersActivity extends Activity {
                 break;
             case R.id.context_edit:
                 break;
-
         }
-
-
         return true;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_all_users, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 }

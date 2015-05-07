@@ -9,9 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-/**
- * Created by Amatuni.Movsisyan on 4/25/2015.
- */
 public class RegistrActivity extends ActionBarActivity implements View.OnClickListener {
     private  String username;
     private String password;
@@ -19,7 +16,6 @@ public class RegistrActivity extends ActionBarActivity implements View.OnClickLi
     private DBHelper dbHelper;
     private SQLiteDatabase db;
     private ContentValues cv;
-    private Cursor cursor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +37,6 @@ public class RegistrActivity extends ActionBarActivity implements View.OnClickLi
                 cv.put(DBConstans.COLUMN_USERNAME,username);
                 cv.put(DBConstans.COLUMN_PASSWORD,password);
                 id= db.insert(DBConstans.TABLE_NAME,"",cv);
-
                 Log.d(LOG, "inserted row id is:" + id);
                 ((EditText) findViewById(R.id.edt_setUser)).setText(" ");
                 ((EditText) findViewById(R.id.edt_setPass)).setText(" ");

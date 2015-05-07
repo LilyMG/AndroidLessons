@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-/**
- * Created by Amatuni.Movsisyan on 4/25/2015.
- */
 public class DBHelper extends SQLiteOpenHelper {
     private final String LOG = "MY Log";
 

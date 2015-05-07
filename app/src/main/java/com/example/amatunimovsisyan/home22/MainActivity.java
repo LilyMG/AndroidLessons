@@ -25,11 +25,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
     private final String LOG = "MY Log";
     private DBHelper dbHelper;
     private SQLiteDatabase db;
-    private ContentValues cv;
     private Cursor cursor;
     private ArrayAdapter<String> spinnerAdapter;
-    Spinner spinner;
-    String country;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -44,9 +41,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
                 Log.d("MyLog", "menuItemSelected");
                 break;
         }
-
         return true;
-        // return super.onContextItemSelected(item);
     }
 
     @Override
@@ -57,32 +52,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         findViewById(R.id.btn_login).setOnClickListener(this);
         dbHelper = new DBHelper(this);
         db = dbHelper.getWritableDatabase();
-        cv = new ContentValues();
         registerForContextMenu(findViewById(R.id.edt_login));
         final String[] countries = {"", "USA", "ARM", "RUS"};
-        spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, countries);
-        spinner = (Spinner) findViewById(R.id.country_spinner);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                country = (String) spinner.getItemAtPosition(position);
-                Log.d("MyLog", "selected item is " + country);
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        findViewById(R.id.edt_login).setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                startActionMode(callback);
-                return true;
-            }
-        });
-
     }
 
 
@@ -136,38 +107,4 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         if (resultCode == RESULT_OK)
             Toast.makeText(getApplicationContext(), "Registration Success!", Toast.LENGTH_SHORT).show();
     }
-
-    ActionMode.Callback callback = new ActionMode.Callback() {
-        @Override
-        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            menu.add("edit");
-            menu.add(0,1,0,"delete");
-            return true;
-        }
-
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return true;
-        }
-
-        @Override
-        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-            switch ( item.getItemId())
-            {case 0 :
-                Log.d("MyLog", "edit item");
-                break;
-            case 1:
-                Log.d("MyLog", "delete item");
-                break;
-            }
-            return true;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {
-
-        }
-    };
-
-
 }

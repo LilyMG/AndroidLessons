@@ -36,7 +36,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 break;
             case R.id.btn_upd:
                 Intent intent2=getIntent();
-                Bundle bundle2 = intent2.getExtras();
                 int id=intent2.getIntExtra("id",-1);
                 String updateUsername = ((EditText) findViewById(R.id.edt_updUser)).getText().toString();
                 String updatePassword = ((EditText) findViewById(R.id.edt_updPass)).getText().toString();
@@ -46,8 +45,6 @@ public class LoginActivity extends ActionBarActivity implements View.OnClickList
                 db.update(DBConstans.TABLE_NAME, cv,  "id="+ id, null);
                 Toast.makeText(getApplicationContext(), "Username and Password changed!", Toast.LENGTH_SHORT).show();
                 break;
-
-
         }
     }
 }
