@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.amatunimovsisyan.home22.AllUsersActivity">
+
+    <item android:id="@+id/context_delete"
+        android:title="delete" />
+
+    <item android:id="@+id/context_edit"
+        android:title="edit" />
+</menu>
